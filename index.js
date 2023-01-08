@@ -1,15 +1,22 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const routes = require("./routes");
+const PORT = process.env.PORT || 3000
 
 mongoose
-  .connect("mongodb://localhost:27017/acmedb", { useNewUrlParser: true })
+.connect("mongodb+srv://learn:learn@cluster0.agne6k0.mongodb.net/?retryWrites=true&w=majority", { useNewUrlParser: true })
   .then(() => {
-    const app = express();
+    console.log(`Database started`)
+  })
+  .catch((err)=>{
+    console.log("Error =>", err)
+  })
+  ;
+
+  const app = express();
     app.use(express.json());
     app.use("/api", routes);
 
-    app.listen(5000, () => {
-      console.log("Server has started!");
+    app.listen(PORT, () => {
+      console.log(`Server has started! on port ${PORT} `);
     });
-  });
